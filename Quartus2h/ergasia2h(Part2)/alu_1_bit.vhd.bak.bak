@@ -1,0 +1,416 @@
+library ieee;
+use ieee.std_logic_1164.all;
+PACKAGE alu1 IS
+
+COMPONENT orGate
+ PORT (a,b : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT andGate
+ PORT (a,b : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT ADD
+ PORT(   cin, a, b : in std_logic;
+        cout , s    : out std_logic);
+END COMPONENT;
+
+COMPONENT notB
+ PORT ( b : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT notA
+ PORT ( a : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT xorGate 
+ PORT( a, b: in std_logic;
+        s: out std_logic);
+END COMPONENT;
+
+COMPONENT mux2a
+ PORT ( a1, a2,AInvert: in std_logic;
+			rslta : out std_logic);
+END COMPONENT;
+
+COMPONENT mux2b
+ PORT (b1, b2,BInvert: in std_logic;
+			rsltb : out std_logic);
+END COMPONENT;
+
+COMPONENT mux4
+ PORT(
+    andGate      : in  std_logic;
+    orGate      : in  std_logic;
+    add      : in  std_logic;
+    xorGate      : in  std_logic;
+    operation     : in  std_logic_vector(1 downto 0);
+    rslt       : out std_logic);
+END COMPONENT;
+
+COMPONENT ControlCircuit
+    PORT (
+            opcode : in std_logic_vector (2 downto 0);
+            signala,signalb : out std_logic_vector(0 downto 0);
+            operation : out std_logic_vector (1 downto 0);
+            CarryIn: out std_logic);
+
+END COMPONENT;
+
+END PACKAGE alu1;-----dimiourgoume package oste na to kalesoume sthn 16bit alu
+
+
+ENTITY orGate IS
+    PORT( a, b: in std_logic;
+        s: out std_logic);
+END orGate;
+
+
+
+ARCHITECTURE structure1 OF orGate IS
+BEGIN
+    s <= a OR b;
+END structure1;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY andGate IS
+    PORT( a, b: in std_logic;
+            s: out std_logic);
+END andGate;
+
+ARCHITECTURE structure2 OF andGate IS
+BEGIN
+    s <= a AND b;
+END structure2;
+
+--Entity add 
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY ADD IS
+ PORT(   cin, a, b : in std_logic;
+        cout, s    : out std_logic);
+END ADD;
+
+ARCHITECTURE structure3 OF ADD IS
+BEGIN
+    s <= (a AND (NOT b) AND (NOT cin)) OR ((NOT a) AND b AND (NOT 
+cin)) OR ((NOT a) AND (NOT b) AND cin) OR (a AND b AND cin);
+    cout <=( a AND b) OR (cin AND a) OR (cin AND b);
+END structure3;
+
+-- Inverter, Sub, nor
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY notB IS
+    PORT( b: in std_logic;
+        s: out std_logic);
+END notB;
+
+ARCHITECTURE structure4 OF notB IS
+BEGIN
+    s <= NOT b;
+END structure4;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY notA IS
+    PORT( a: in std_logic;
+        s: out std_logic);
+END notA;
+
+ARCHITECTURE structure5 OF notA IS
+BEGIN
+    s <= NOT a;
+END structure5;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY xorGate IS
+    PORT( a, b: in std_logic;
+           s: out std_logic);
+END xorGate;
+
+ARCHITECTURE structure6 OF xorGate IS
+BEGIN
+    s <= a XOR b;
+END structure6;
+
+-- MUX 4 TO 1
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY mux2a IS
+PORT(
+    a1     : in  std_logic;
+    a2     : in  std_logic;
+    AInvert     : in  std_logic;
+    rslta       : out std_logic);
+END mux2a;
+
+ARCHITECTURE structure7 OF mux2a IS
+BEGIN
+WITH AInvert SELECT
+        rslta <= a1 WHEN '0',
+        a2 WHEN OTHERS;
+end structure7; 
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY mux2b IS
+PORT(
+    b1     : in  std_logic;
+    b2     : in  std_logic;
+    BInvert     : in  std_logic;
+    rsltb      : out std_logic);
+END mux2b;
+
+ARCHITECTURE structure8 OF mux2b IS
+BEGIN
+WITH BInvert SELECT
+        rsltb <= b1 WHEN '0',
+        b2 WHEN OTHERS;
+end structure8; 
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+
+ENTITY mux4 IS
+PORT(
+    andGate      : in  std_logic;
+    orGate      : in  std_logic;
+    add        : in  std_logic;
+    xorGate      : in  std_logic;
+    operation     : in  std_logic_vector(1 downto 0);
+    rslt       : out std_logic);
+END mux4;
+
+ARCHITECTURE structure9 OF mux4 IS
+BEGIN
+  WITH operation SELECT
+        rslt <= andGate WHEN "00",
+             orGate WHEN "01",
+             add WHEN "10",
+             xorGate WHEN OTHERS;
+end structure9;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+
+entity ControlCircuit is 
+    port (
+            opcode      :in std_logic_vector (2 downto 0);
+            signala, signalb : out  std_logic_vector(0 downto 0);
+            operation : out std_logic_vector(1 downto 0);
+            CarryIn : out std_logic);               
+end ControlCircuit;
+
+architecture structure10 of ControlCircuit is   
+--signal outAND,outOR,outXOR,sum,outnotA,outnotB : std_logic;
+--signal operation : out std_logic_vector(1 downto 0);  
+begin
+ process(opcode)
+ begin
+
+case opcode is 
+
+    --AND--
+    when "000"=>
+        operation <= "00";
+        signala   <= "0";
+        signalb      <= "0";
+        CarryIn  <= '0';
+
+    --OR--
+    when "001" =>
+        operation <= "01";
+        signala   <= "0";
+        signalb      <= "0";
+        CarryIn  <= '0';
+
+    --ADD--         
+    when "010" =>
+        operation <= "10";
+        signala   <= "0";
+        signalb      <= "0";
+        CarryIn  <= '0';
+
+    --SUB--
+    when "011" =>
+        operation <= "10";
+        signala   <= "0";
+        signalb      <="1";
+        CarryIn  <= '1';
+
+    --NOR--
+    when "100"=>
+        operation <= "00";
+        signala   <= "1";
+        signalb      <= "1";
+        CarryIn  <= '0';
+
+    --NAND
+    when "101" =>
+        operation <= "01";
+        signala   <= "1";
+        signalb      <= "1";
+        CarryIn  <= '0';
+
+    --xor--
+    when  "110" =>
+        operation <= "11";
+        signala   <= "0";
+        signalb      <= "0";
+        CarryIn  <= '0';
+    end case;
+    end process;
+end structure10;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use work.alu1.all;
+
+entity structural1 is 
+    port (a,b: in std_logic;
+            opcode : in std_logic_vector ( 2 downto 0);
+            Result,CarryOut : out std_logic);
+end structural1;
+
+architecture alu of structural1 is 
+    signal outAND,outOR,outXOR,sum,outnotA,outnotB,CarryIn : std_logic;
+    signal signala,signalb : std_logic_vector (0 downto 0);
+    signal operation : std_logic_vector (1 downto 0);
+begin 
+NOT_a <= NOT a;
+NOT_b <= NOT b;
+
+u0 : andGate port map (outnotA,outnotB,outAND);
+u1 : orGate port map (outnotA,outnotB,outOR);
+u2 : xorGate port map (outnotA,outnotB,outXOR);
+u3 : ADD port map (CarryIn,outnotA,outnotB,sum,CarryOut);
+u4 : mux2a port map (a,NOT_A,AInvert,outnotA);
+u5 : mux2b port map (b,NOT_b,BInvert,outnotB);
+u6 : mux4 port map (outAND, outOR,sum, outXOR, operation, Result );
+u8 : ControlCircuit port map(opcode,signala,signalb,operation,CarryIn);
+end alu; 
+-------------------------------------------------------------------------------------------------------------------------
+library ieee;
+use ieee.std_logic_1164.all;
+library work;
+use work.alu1.all;
+
+
+entity alu_16_bit is
+    port (
+        a:          in  std_logic_vector (15 downto 0);
+        b:          in  std_logic_vector (15 downto 0);
+        opcode:     in  std_logic_vector (2 downto 0);
+        result:     out std_logic_vector (15 downto 0);
+        carryout:   out std_logic
+    );
+end entity;
+
+architecture foo of alu_16_bit is
+    component alu1 is
+        port (
+            a:          in  std_logic;
+            b:          in  std_logic;
+            AInvert:    in  std_logic;
+            BInvert:    in  std_logic;
+            carryin:    in  std_logic;
+            operation:  in  std_logic_vector (1 downto 0);
+            result:     out std_logic;
+            carryout:   out std_logic
+        );
+    end component;
+    component controlcircuit is
+        port (
+            opcode:     in  std_logic_vector(2 downto 0);
+            AInvert:    out std_logic;
+            BInvert:    out std_logic;
+            operation:  out std_logic_vector(1 downto 0);
+            carryin:    out std_logic  -- invert a or b, add + 1 for subtract
+        );
+    end component;
+
+    signal AInvert:     std_logic;
+    signal BInvert:     std_logic;
+    signal operation:   std_logic_vector (1 downto 0);
+    signal carry:       std_logic_vector (16 downto 0);
+begin
+
+CONTROL_CIRCUIT:
+    controlcircuit
+        port map (
+            opcode => opcode,
+            AInvert => AInvert,
+            BInvert => BInvert,
+            operation => operation,
+            carryin => carry(0)   -- for + 1 durring subtract
+        );
+
+GEN_ALU:
+    for i in 0 to 15 generate
+ALU:
+        alu_1_bit
+            port map (
+                a => a(i),
+                b => b(i),
+                AInvert => AInvert,
+                BInvert => BInvert,
+                carryin => carry(i),
+                operation => operation,
+                result => result(i),
+                carryout => carry(i + 1) 
+            );
+    end generate;
+
+    carryout <= carry(16) when operation = "10" else '0';
+
+end architecture;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

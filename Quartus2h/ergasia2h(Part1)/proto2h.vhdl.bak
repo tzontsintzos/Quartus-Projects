@@ -1,0 +1,241 @@
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+-- Entity or & and 
+
+ENTITY orGate IS
+    PORT( a, b: in std_logic;
+        s: out std_logic);
+END orGate;
+
+
+
+ARCHITECTURE structure1 OF orGate IS
+BEGIN
+    s <= a OR b;
+END structure1;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY andGate IS
+    PORT( a, b: in std_logic;
+            s: out std_logic);
+END andGate;
+
+ARCHITECTURE structure2 OF andGate IS
+BEGIN
+    s <= a AND b;
+END structure2;
+
+--Entity add 
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY ADD IS
+ PORT(   cin, a, b : in std_logic;
+        cout, s    : out std_logic);
+END ADD;
+
+ARCHITECTURE structure3 OF ADD IS
+BEGIN
+    s <= (a AND (NOT b) AND (NOT cin)) OR ((NOT a) AND b AND (NOT 
+cin)) OR ((NOT a) AND (NOT b) AND cin) OR (a AND b AND cin);
+    cout <=( a AND b) OR (cin AND a) OR (cin AND b);
+END structure3;
+
+-- Inverter, Sub, nor
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY notB IS
+    PORT( b: in std_logic;
+        s: out std_logic);
+END notB;
+
+ARCHITECTURE structure4 OF notB IS
+BEGIN
+    s <= NOT b;
+END structure4;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY notA IS
+    PORT( a: in std_logic;
+        s: out std_logic);
+END notA;
+
+ARCHITECTURE structure5 OF notA IS
+BEGIN
+    s <= NOT a;
+END structure5;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY xorGate IS
+    PORT( a, b: in std_logic;
+           s: out std_logic);
+END xorGate;
+
+ARCHITECTURE structure6 OF xorGate IS
+BEGIN
+    s <= a XOR b;
+END structure6;
+
+-- MUX 4 TO 1
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY mux2a IS
+PORT(
+    a1     : in  std_logic;
+    a2     : in  std_logic;
+    AInvert     : in  std_logic;
+    rslta       : out std_logic);
+END mux2a;
+
+ARCHITECTURE structure7 OF mux2a IS
+BEGIN
+WITH AInvert SELECT
+        rslta <= a1 WHEN '0',
+        a2 WHEN OTHERS;
+end structure7; 
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY mux2b IS
+PORT(
+    b1     : in  std_logic;
+    b2     : in  std_logic;
+    BInvert     : in  std_logic;
+    rsltb      : out std_logic);
+END mux2b;
+
+ARCHITECTURE structure8 OF mux2b IS
+BEGIN
+WITH BInvert SELECT
+        rsltb <= b1 WHEN '0',
+        b2 WHEN OTHERS;
+end structure8; 
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+
+ENTITY mux4 IS
+PORT(
+    andGate      : in  std_logic;
+    orGate      : in  std_logic;
+    add        : in  std_logic;
+    xorGate      : in  std_logic;
+    operation     : in  std_logic_vector(1 downto 0);
+    rslt       : out std_logic);
+END mux4;
+
+ARCHITECTURE structure9 OF mux4 IS
+BEGIN
+  WITH operation SELECT
+        rslt <= andGate WHEN "00",
+             orGate WHEN "01",
+             add WHEN "10",
+             xorGate WHEN OTHERS;
+end structure9;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+ENTITY proto2h IS
+	PORT ( a, b, AInvert, BInvert, CarryIn : in std_logic;
+				Operation : in std_logic_vector(1 downto 0);
+				f,CarryOut: out std_logic);
+END proto2h;
+
+ARCHITECTURE structural OF proto2h IS
+COMPONENT orGate
+ PORT (a,b : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT andGate
+ PORT (a,b : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT ADD
+ PORT(   cin, a, b : in std_logic;
+        cout , s    : out std_logic);
+END COMPONENT;
+
+COMPONENT notB
+ PORT ( b : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT notA
+ PORT ( a : in std_logic; s : out std_logic);
+END COMPONENT;
+
+COMPONENT xorGate 
+ PORT( a, b: in std_logic;
+        s: out std_logic);
+END COMPONENT;
+
+COMPONENT mux2a
+ PORT ( a1, a2,AInvert: in std_logic;
+			rslta : out std_logic);
+END COMPONENT;
+
+COMPONENT mux2b
+ PORT (b1, b2,BInvert: in std_logic;
+			rsltb : out std_logic);
+END COMPONENT;
+
+COMPONENT mux4
+ PORT(
+    andGate      : in  std_logic;
+    orGate      : in  std_logic;
+    add      : in  std_logic;
+    xorGate      : in  std_logic;
+    operation     : in  std_logic_vector(1 downto 0);
+    rslt       : out std_logic);
+END COMPONENT;
+
+signal NOT_a, NOT_b, rslta, rsltb, rsltand , rsltor, rsltadd, rsltxor : std_logic; 
+--signal operationl : std_logic_vector(1 downto 0);--
+BEGIN
+
+NOT_a <= NOT a;
+NOT_b <= NOT b;
+MUX_2A: mux2a PORT MAP (a,NOT_a,AInvert,rslta);
+MUX_2B: mux2b PORT MAP (b, NOT_b,BInvert,rsltb);
+AND1 : andGate PORT MAP (rslta , rsltb, rsltand);
+OR1 : orGate PORT MAP (rslta , rsltb, rsltor);
+ADD1 : ADD PORT MAP (CarryIn, rslta , rsltb,CarryOut,rsltadd);
+XOR1 : xorGate PORT MAP (rslta , rsltb, rsltxor);
+MUX_4 : mux4 PORT MAP (rsltand, rsltor, rsltadd,rsltxor,operation,f);
+END structural;
+
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+
+

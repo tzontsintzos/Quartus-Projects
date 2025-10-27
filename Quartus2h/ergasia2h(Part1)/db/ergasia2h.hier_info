@@ -1,0 +1,77 @@
+|proto2h
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f << mux4:MUX_4.rslt
+CarryOut << ADD:ADD1.cout
+
+
+|proto2h|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|proto2h|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|proto2h|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|proto2h|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|proto2h|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|proto2h|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|proto2h|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+

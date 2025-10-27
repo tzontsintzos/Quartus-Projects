@@ -1,0 +1,50 @@
+library IEEE;
+use ieee.std_logic_1164.all;
+
+entity product2 is 
+	port (in1, in2: in std_logic; out1: out std_logic);
+end product2;
+
+architecture mdl_cnc of product2 is
+begin
+	out1 <= in1 and in2;
+end mdl_cnc;
+
+library IEEE;
+use ieee.std_logic_1164.all;
+
+entity sumsofprod is
+	port (in1,in2: in std_logic; out1: out std_logic);
+end sumsofprod;
+
+architecture mdl_cnc2 of sumsofprod is
+begin
+	out1 <= in1 or in2;
+end mdl_cnc2;
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity ask3 is
+   port (x1, x2, x3, x4: in std_logic;
+              f3: out std_logic);
+end ask3;
+
+architecture structural of ask3 is
+component product2
+ port (in1, in2: in std_logic; out1: out std_logic);
+end component;
+
+
+component sumsofprod
+ port (in1, in2: in std_logic; out1: out std_logic);
+end component; 
+
+signal res1, res2: std_logic;
+begin
+
+I0: product2 port map (not x1, x2, res1); 
+I1: product2 port map (x3, x4, res2);
+I5: sumsofprod port map (res1, res2, f3); 
+end structural;

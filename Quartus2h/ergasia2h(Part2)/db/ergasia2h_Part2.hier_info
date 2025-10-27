@@ -1,0 +1,1313 @@
+|ergasia2h_Part2
+a[0] => alu_1_bit:GEN_ALU:0:ALU.a
+a[1] => alu_1_bit:GEN_ALU:1:ALU.a
+a[2] => alu_1_bit:GEN_ALU:2:ALU.a
+a[3] => alu_1_bit:GEN_ALU:3:ALU.a
+a[4] => alu_1_bit:GEN_ALU:4:ALU.a
+a[5] => alu_1_bit:GEN_ALU:5:ALU.a
+a[6] => alu_1_bit:GEN_ALU:6:ALU.a
+a[7] => alu_1_bit:GEN_ALU:7:ALU.a
+a[8] => alu_1_bit:GEN_ALU:8:ALU.a
+a[9] => alu_1_bit:GEN_ALU:9:ALU.a
+a[10] => alu_1_bit:GEN_ALU:10:ALU.a
+a[11] => alu_1_bit:GEN_ALU:11:ALU.a
+a[12] => alu_1_bit:GEN_ALU:12:ALU.a
+a[13] => alu_1_bit:GEN_ALU:13:ALU.a
+a[14] => alu_1_bit:GEN_ALU:14:ALU.a
+a[15] => alu_1_bit:GEN_ALU:15:ALU.a
+b[0] => alu_1_bit:GEN_ALU:0:ALU.b
+b[1] => alu_1_bit:GEN_ALU:1:ALU.b
+b[2] => alu_1_bit:GEN_ALU:2:ALU.b
+b[3] => alu_1_bit:GEN_ALU:3:ALU.b
+b[4] => alu_1_bit:GEN_ALU:4:ALU.b
+b[5] => alu_1_bit:GEN_ALU:5:ALU.b
+b[6] => alu_1_bit:GEN_ALU:6:ALU.b
+b[7] => alu_1_bit:GEN_ALU:7:ALU.b
+b[8] => alu_1_bit:GEN_ALU:8:ALU.b
+b[9] => alu_1_bit:GEN_ALU:9:ALU.b
+b[10] => alu_1_bit:GEN_ALU:10:ALU.b
+b[11] => alu_1_bit:GEN_ALU:11:ALU.b
+b[12] => alu_1_bit:GEN_ALU:12:ALU.b
+b[13] => alu_1_bit:GEN_ALU:13:ALU.b
+b[14] => alu_1_bit:GEN_ALU:14:ALU.b
+b[15] => alu_1_bit:GEN_ALU:15:ALU.b
+opcode[0] => controlcircuit:CONTROL_CIRCUIT.opcode[0]
+opcode[0] => Equal0.IN1
+opcode[0] => Equal1.IN2
+opcode[1] => controlcircuit:CONTROL_CIRCUIT.opcode[1]
+opcode[1] => Equal0.IN2
+opcode[1] => Equal1.IN1
+opcode[2] => controlcircuit:CONTROL_CIRCUIT.opcode[2]
+opcode[2] => Equal0.IN0
+opcode[2] => Equal1.IN0
+result[0] <= alu_1_bit:GEN_ALU:0:ALU.f
+result[1] <= alu_1_bit:GEN_ALU:1:ALU.f
+result[2] <= alu_1_bit:GEN_ALU:2:ALU.f
+result[3] <= alu_1_bit:GEN_ALU:3:ALU.f
+result[4] <= alu_1_bit:GEN_ALU:4:ALU.f
+result[5] <= alu_1_bit:GEN_ALU:5:ALU.f
+result[6] <= alu_1_bit:GEN_ALU:6:ALU.f
+result[7] <= alu_1_bit:GEN_ALU:7:ALU.f
+result[8] <= alu_1_bit:GEN_ALU:8:ALU.f
+result[9] <= alu_1_bit:GEN_ALU:9:ALU.f
+result[10] <= alu_1_bit:GEN_ALU:10:ALU.f
+result[11] <= alu_1_bit:GEN_ALU:11:ALU.f
+result[12] <= alu_1_bit:GEN_ALU:12:ALU.f
+result[13] <= alu_1_bit:GEN_ALU:13:ALU.f
+result[14] <= alu_1_bit:GEN_ALU:14:ALU.f
+result[15] <= alu_1_bit:GEN_ALU:15:ALU.f
+carryout <= carryout.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|ControlCircuit:CONTROL_CIRCUIT
+opcode[0] => Mux0.IN10
+opcode[0] => Mux2.IN10
+opcode[0] => Mux3.IN10
+opcode[1] => Mux0.IN9
+opcode[1] => Mux1.IN5
+opcode[1] => Mux2.IN9
+opcode[1] => Mux3.IN9
+opcode[1] => operation[1].DATAIN
+opcode[2] => Mux0.IN8
+opcode[2] => Mux1.IN4
+opcode[2] => Mux2.IN8
+opcode[2] => Mux3.IN8
+signala[0] <= Mux1.DB_MAX_OUTPUT_PORT_TYPE
+signalb[0] <= Mux2.DB_MAX_OUTPUT_PORT_TYPE
+operation[0] <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+operation[1] <= opcode[1].DB_MAX_OUTPUT_PORT_TYPE
+CarryIn <= Mux3.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:0:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:1:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:2:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:3:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:4:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:5:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:6:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:7:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:8:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:9:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:10:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:11:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:12:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:13:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:14:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU
+a => mux2a:MUX_2A.a1
+a => mux2a:MUX_2A.a2
+b => mux2b:MUX_2B.b1
+b => mux2b:MUX_2B.b2
+AInvert => mux2a:MUX_2A.AInvert
+BInvert => mux2b:MUX_2B.BInvert
+CarryIn => ADD:ADD1.cin
+Operation[0] => mux4:MUX_4.operation[0]
+Operation[1] => mux4:MUX_4.operation[1]
+f <= mux4:MUX_4.rslt
+CarryOut <= ADD:ADD1.cout
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU|mux2a:MUX_2A
+a1 => rslta.DATAB
+a2 => rslta.DATAA
+AInvert => rslta.OUTPUTSELECT
+rslta <= rslta.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU|mux2b:MUX_2B
+b1 => rsltb.DATAB
+b2 => rsltb.DATAA
+BInvert => rsltb.OUTPUTSELECT
+rsltb <= rsltb.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU|andGate:AND1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU|orGate:OR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU|ADD:ADD1
+cin => s.IN1
+cin => s.IN1
+cin => cout.IN0
+cin => cout.IN0
+cin => s.IN1
+cin => s.IN1
+a => s.IN0
+a => cout.IN0
+a => cout.IN1
+a => s.IN0
+a => s.IN0
+b => s.IN1
+b => cout.IN1
+b => cout.IN1
+b => s.IN1
+b => s.IN1
+cout <= cout.DB_MAX_OUTPUT_PORT_TYPE
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU|xorGate:XOR1
+a => s.IN0
+b => s.IN1
+s <= s.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|ergasia2h_Part2|alu_1_bit:\GEN_ALU:15:ALU|mux4:MUX_4
+andGate => Mux0.IN0
+orGate => Mux0.IN1
+add => Mux0.IN2
+xorGate => Mux0.IN3
+operation[0] => Mux0.IN5
+operation[1] => Mux0.IN4
+rslt <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+

@@ -1,0 +1,20 @@
+|ask2
+f <= inst18.DB_MAX_OUTPUT_PORT_TYPE
+x1 => inst.IN0
+x1 => inst15.IN0
+x1 => inst16.IN0
+x1 => inst9.IN0
+x2 => inst.IN1
+x2 => inst11.IN0
+x2 => inst16.IN1
+x2 => inst17.IN1
+x3 => inst12.IN0
+x3 => inst15.IN2
+x3 => inst16.IN2
+x3 => inst17.IN2
+x4 => inst.IN3
+x4 => inst15.IN3
+x4 => inst13.IN0
+x4 => inst17.IN3
+
+
